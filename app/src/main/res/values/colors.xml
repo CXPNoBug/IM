@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="switch_bg_on">#31ABFF</color>
+    <color name="switch_bg_off">#E0DDE0</color>
+    <color name="new_black">#333333</color>
+    <color name="new_white">#ffffff</color>
+    <color name="new_divide_line">#DEDEDE</color>
+    <color name="new_color_000000">#000000</color>
+    <color name="new_color_CCCCCC">#CCCCCC</color>
+    <color name="new_color_fff3f3f3">#fff3f3f3</color>
+    <color name="new_color_f3f3f3">#f3f3f3</color>
+    <color name="new_divide_fff5f5f5">#fff5f5f5</color>
+    <color name="new_divide_e5e5e5">#E5E5E5</color>
+    <color name="new_divide_efefef">#EFEFEF</color>
+    <color name="new_color_F25643">#F25643</color>
+    <color name="new_color_F24343">#F24343</color>
+    <color name="new_color_ffebebeb">#ffebebeb</color>
+    <color name="new_color_666666">#666666</color>
+    <color name="new_color_999999">#999999</color>
+    <color name="new_color_32AAFF">#32AAFF</color>
+    <color name="new_color_ff999999">#ff999999</color>
+    <color name="new_color_ff32aaff">#ff32aaff</color>
+    <color name="new_color_ffefefef">#ffefefef</color>
+    <color name="bg_message_list_top">#fff2f2f2</color>
+    <color name="new_color_BDBDBD">#FFBDBDBD</color>
+    <color name="un_disturb_point">#FFEE1B25</color>
+
+</resources>
