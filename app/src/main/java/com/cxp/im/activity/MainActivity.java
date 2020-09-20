@@ -19,9 +19,10 @@ public class MainActivity extends BaseActivity {
 
         final RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions
-                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                         Manifest.permission.CAMERA,
-                         Manifest.permission.RECORD_AUDIO)
+                .request(Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.RECORD_AUDIO)
                 .subscribe(granted -> {
                     if (granted) {
                         //权限开启成功

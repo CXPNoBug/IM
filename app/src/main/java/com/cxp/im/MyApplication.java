@@ -29,6 +29,8 @@ import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
  */
 public class MyApplication extends Application {
 
+    public static Application mApplication;
+
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器
@@ -52,6 +54,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mApplication=this;
 
         //初始化
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()

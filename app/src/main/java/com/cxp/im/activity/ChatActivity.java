@@ -2,6 +2,7 @@ package com.cxp.im.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaMetadataRetriever;
@@ -37,10 +38,13 @@ import com.cxp.im.bean.VideoMsgBody;
 import com.cxp.im.utils.AppUtils;
 import com.cxp.im.utils.ChatUiHelper;
 import com.cxp.im.utils.FileUtils;
+import com.cxp.im.utils.PictureFileUtil;
 import com.cxp.im.widget.MediaManager;
 import com.cxp.im.widget.RecordButton;
 import com.cxp.im.widget.StateButton;
+import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.orhanobut.logger.Logger;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -91,7 +95,6 @@ public class ChatActivity extends AppCompatActivity {
     TextView mNewHeadTitle;
 
     private ChatAdapter mAdapter;
-
 
     private ImageView ivAudio;
 
@@ -168,6 +171,7 @@ public class ChatActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+
                 final boolean isSend = mAdapter.getItem(position).getSenderId().equals(AppUtils.mSenderId);
                 if (ivAudio != null) {
                     if (isSend) {
@@ -210,15 +214,17 @@ public class ChatActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void initChatUi() {
         final ChatUiHelper mUiHelper = ChatUiHelper.with(this);
-        mUiHelper.bindContentLayout(mLlContent)
-                .bindAudioIv(mIvAudio)
-                .bindAudioBtn(mBtnAudio)
-                .bindToSendButton(mBtnSend)
-                .bindEditText(mEtContent)
-                .bindBottomLayout(mBottomLayout)
-                .bindEmojiLayout(mLlEmotion)
-                .bindAddLayout(mLlAdd)
-                .bindToEmojiButton(mIvEmo);
+        mUiHelper.bindContentLayout(mLlContent) //绑定整体界面布局
+                .bindAudioIv(mIvAudio) //绑定语音图片点击事件
+                .bindAudioBtn(mBtnAudio) //绑定语音按钮点击事件
+                .bindToSendButton(mBtnSend) //绑定发送按钮
+                .bindEditText(mEtContent) //绑定输入框
+                .bindBottomLayout(mBottomLayout) //绑定底部布局
+                .bindEmojiLayout(mLlEmotion) //绑定表情布局
+                .bindAddLayout(mLlAdd) //绑定添加布局
+                .bindToEmojiButton(mIvEmo) //绑定表情按钮点击事件
+                .bindToAddButton(mIvAdd) //绑定底部加号按钮
+                .bindEmojiData(); //绑定表情数据
 
         //点击空白区域关闭键盘
         mRvChatList.setOnTouchListener((view, event) -> {
@@ -263,15 +269,15 @@ public class ChatActivity extends AppCompatActivity {
                 break;
             case R.id.rlPhoto:
                 //选择图片
-//                PictureFileUtil.openGalleryPic(ChatActivity.this, REQUEST_CODE_IMAGE);
+                PictureFileUtil.openGalleryPic(ChatActivity.this, REQUEST_CODE_IMAGE);
                 break;
             case R.id.rlVideo:
                 //选择视频
-//                PictureFileUtil.openGalleryAudio(ChatActivity.this, REQUEST_CODE_VEDIO);
+                PictureFileUtil.openGalleryAudio(ChatActivity.this, REQUEST_CODE_VEDIO);
                 break;
             case R.id.rlFile:
                 //选择文件
-//                PictureFileUtil.openFile(ChatActivity.this, REQUEST_CODE_FILE);
+                PictureFileUtil.openFile(ChatActivity.this, REQUEST_CODE_FILE);
                 break;
             case R.id.rlLocation:
                 break;
@@ -417,5 +423,35 @@ public class ChatActivity extends AppCompatActivity {
             }
         }, 2000);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_FILE:
+                    String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+                    Logger.d("获取到的文件路径:" + filePath);
+                    sendFileMessage(filePath);
+                    break;
+                case REQUEST_CODE_IMAGE:
+                    // 图片选择结果回调
+                    List<LocalMedia> selectListPic = PictureSelector.obtainMultipleResult(data);
+                    for (LocalMedia media : selectListPic) {
+                        Logger.d("获取图片路径成功:" + media.getPath());
+                        sendImageMessage(media);
+                    }
+                    break;
+                case REQUEST_CODE_VEDIO:
+                    // 视频选择结果回调
+                    List<LocalMedia> selectListVideo = PictureSelector.obtainMultipleResult(data);
+                    for (LocalMedia media : selectListVideo) {
+                        Logger.d("获取视频路径成功:" + media.getPath());
+                        sendVedioMessage(media);
+                    }
+                    break;
+            }
+        }
     }
 }
