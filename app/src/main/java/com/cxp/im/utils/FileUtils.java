@@ -36,52 +36,35 @@ public final class FileUtils {
     }
 
     /**
-     * Return the file by path.
-     *
-     * @param filePath The path of file.
-     * @return the file
+     * 根据文件路径获取文件
      */
     public static File getFileByPath(final String filePath) {
         return isSpace(filePath) ? null : new File(filePath);
     }
 
     /**
-     * Return whether the file exists.
-     *
-     * @param filePath The path of file.
-     * @return {@code true}: yes<br>{@code false}: no
+     * 判断文件是否存在
      */
     public static boolean isFileExists(final String filePath) {
         return isFileExists(getFileByPath(filePath));
     }
 
     /**
-     * Return whether the file exists.
-     *
-     * @param file The file.
-     * @return {@code true}: yes<br>{@code false}: no
+     * 判断文件是否存在
      */
     public static boolean isFileExists(final File file) {
         return file != null && file.exists();
     }
 
     /**
-     * Rename the file.
-     *
-     * @param filePath The path of file.
-     * @param newName  The new name of file.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 重命名文件
      */
     public static boolean rename(final String filePath, final String newName) {
         return rename(getFileByPath(filePath), newName);
     }
 
     /**
-     * Rename the file.
-     *
-     * @param file    The file.
-     * @param newName The new name of file.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 重命名文件
      */
     public static boolean rename(final File file, final String newName) {
         // file is null then return false
@@ -99,80 +82,56 @@ public final class FileUtils {
     }
 
     /**
-     * Return whether it is a directory.
-     *
-     * @param dirPath The path of directory.
-     * @return {@code true}: yes<br>{@code false}: no
+     * 判断是否是目录
      */
     public static boolean isDir(final String dirPath) {
         return isDir(getFileByPath(dirPath));
     }
 
     /**
-     * Return whether it is a directory.
-     *
-     * @param file The file.
-     * @return {@code true}: yes<br>{@code false}: no
+     * 判断是否是目录
      */
     public static boolean isDir(final File file) {
         return file != null && file.exists() && file.isDirectory();
     }
 
     /**
-     * Return whether it is a file.
-     *
-     * @param filePath The path of file.
-     * @return {@code true}: yes<br>{@code false}: no
+     * 判断是否是文件
      */
     public static boolean isFile(final String filePath) {
         return isFile(getFileByPath(filePath));
     }
 
     /**
-     * Return whether it is a file.
-     *
-     * @param file The file.
-     * @return {@code true}: yes<br>{@code false}: no
+     * 判断是否是文件
      */
     public static boolean isFile(final File file) {
         return file != null && file.exists() && file.isFile();
     }
 
     /**
-     * Create a directory if it doesn't exist, otherwise do nothing.
-     *
-     * @param dirPath The path of directory.
-     * @return {@code true}: exists or creates successfully<br>{@code false}: otherwise
+     * 判断目录是否存在，不存在则判断是否创建成功
      */
     public static boolean createOrExistsDir(final String dirPath) {
         return createOrExistsDir(getFileByPath(dirPath));
     }
 
     /**
-     * Create a directory if it doesn't exist, otherwise do nothing.
-     *
-     * @param file The file.
-     * @return {@code true}: exists or creates successfully<br>{@code false}: otherwise
+     * 判断目录是否存在，不存在则判断是否创建成功
      */
     public static boolean createOrExistsDir(final File file) {
         return file != null && (file.exists() ? file.isDirectory() : file.mkdirs());
     }
 
     /**
-     * Create a file if it doesn't exist, otherwise do nothing.
-     *
-     * @param filePath The path of file.
-     * @return {@code true}: exists or creates successfully<br>{@code false}: otherwise
+     * 判断文件是否存在，不存在则判断是否创建成功
      */
     public static boolean createOrExistsFile(final String filePath) {
         return createOrExistsFile(getFileByPath(filePath));
     }
 
     /**
-     * Create a file if it doesn't exist, otherwise do nothing.
-     *
-     * @param file The file.
-     * @return {@code true}: exists or creates successfully<br>{@code false}: otherwise
+     * 判断文件是否存在，不存在则判断是否创建成功
      */
     public static boolean createOrExistsFile(final File file) {
         if (file == null) return false;
@@ -187,20 +146,14 @@ public final class FileUtils {
     }
 
     /**
-     * Create a file if it doesn't exist, otherwise delete old file before creating.
-     *
-     * @param filePath The path of file.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 判断文件是否存在，存在则在创建之前删除
      */
     public static boolean createFileByDeleteOldFile(final String filePath) {
         return createFileByDeleteOldFile(getFileByPath(filePath));
     }
 
     /**
-     * Create a file if it doesn't exist, otherwise delete old file before creating.
-     *
-     * @param file The file.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 判断文件是否存在，存在则在创建之前删除
      */
     public static boolean createFileByDeleteOldFile(final File file) {
         if (file == null) return false;
@@ -216,11 +169,7 @@ public final class FileUtils {
     }
 
     /**
-     * Copy the directory.
-     *
-     * @param srcDirPath  The path of source directory.
-     * @param destDirPath The path of destination directory.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 复制文件或目录
      */
     public static boolean copyDir(final String srcDirPath,
                                   final String destDirPath) {
@@ -228,12 +177,7 @@ public final class FileUtils {
     }
 
     /**
-     * Copy the directory.
-     *
-     * @param srcDirPath  The path of source directory.
-     * @param destDirPath The path of destination directory.
-     * @param listener    The replace listener.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 复制文件或目录
      */
     public static boolean copyDir(final String srcDirPath,
                                   final String destDirPath,
@@ -242,11 +186,7 @@ public final class FileUtils {
     }
 
     /**
-     * Copy the directory.
-     *
-     * @param srcDir  The source directory.
-     * @param destDir The destination directory.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 复制文件或目录
      */
     public static boolean copyDir(final File srcDir,
                                   final File destDir) {
@@ -254,12 +194,7 @@ public final class FileUtils {
     }
 
     /**
-     * Copy the directory.
-     *
-     * @param srcDir   The source directory.
-     * @param destDir  The destination directory.
-     * @param listener The replace listener.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 复制文件或目录
      */
     public static boolean copyDir(final File srcDir,
                                   final File destDir,
@@ -268,11 +203,7 @@ public final class FileUtils {
     }
 
     /**
-     * Copy the file.
-     *
-     * @param srcFilePath  The path of source file.
-     * @param destFilePath The path of destination file.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 复制文件或目录
      */
     public static boolean copyFile(final String srcFilePath,
                                    final String destFilePath) {
@@ -280,12 +211,7 @@ public final class FileUtils {
     }
 
     /**
-     * Copy the file.
-     *
-     * @param srcFilePath  The path of source file.
-     * @param destFilePath The path of destination file.
-     * @param listener     The replace listener.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 复制文件或目录
      */
     public static boolean copyFile(final String srcFilePath,
                                    final String destFilePath,
@@ -294,11 +220,7 @@ public final class FileUtils {
     }
 
     /**
-     * Copy the file.
-     *
-     * @param srcFile  The source file.
-     * @param destFile The destination file.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 复制文件或目录
      */
     public static boolean copyFile(final File srcFile,
                                    final File destFile) {
@@ -306,12 +228,7 @@ public final class FileUtils {
     }
 
     /**
-     * Copy the file.
-     *
-     * @param srcFile  The source file.
-     * @param destFile The destination file.
-     * @param listener The replace listener.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 复制文件或目录
      */
     public static boolean copyFile(final File srcFile,
                                    final File destFile,
@@ -320,11 +237,7 @@ public final class FileUtils {
     }
 
     /**
-     * Move the directory.
-     *
-     * @param srcDirPath  The path of source directory.
-     * @param destDirPath The path of destination directory.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 移动文件或目录
      */
     public static boolean moveDir(final String srcDirPath,
                                   final String destDirPath) {
@@ -332,12 +245,7 @@ public final class FileUtils {
     }
 
     /**
-     * Move the directory.
-     *
-     * @param srcDirPath  The path of source directory.
-     * @param destDirPath The path of destination directory.
-     * @param listener    The replace listener.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 移动文件或目录
      */
     public static boolean moveDir(final String srcDirPath,
                                   final String destDirPath,
@@ -346,11 +254,7 @@ public final class FileUtils {
     }
 
     /**
-     * Move the directory.
-     *
-     * @param srcDir  The source directory.
-     * @param destDir The destination directory.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 移动文件或目录
      */
     public static boolean moveDir(final File srcDir,
                                   final File destDir) {
@@ -358,12 +262,7 @@ public final class FileUtils {
     }
 
     /**
-     * Move the directory.
-     *
-     * @param srcDir   The source directory.
-     * @param destDir  The destination directory.
-     * @param listener The replace listener.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 移动文件或目录
      */
     public static boolean moveDir(final File srcDir,
                                   final File destDir,
@@ -372,11 +271,7 @@ public final class FileUtils {
     }
 
     /**
-     * Move the file.
-     *
-     * @param srcFilePath  The path of source file.
-     * @param destFilePath The path of destination file.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 移动文件或目录
      */
     public static boolean moveFile(final String srcFilePath,
                                    final String destFilePath) {
@@ -384,12 +279,7 @@ public final class FileUtils {
     }
 
     /**
-     * Move the file.
-     *
-     * @param srcFilePath  The path of source file.
-     * @param destFilePath The path of destination file.
-     * @param listener     The replace listener.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 移动文件或目录
      */
     public static boolean moveFile(final String srcFilePath,
                                    final String destFilePath,
@@ -398,11 +288,7 @@ public final class FileUtils {
     }
 
     /**
-     * Move the file.
-     *
-     * @param srcFile  The source file.
-     * @param destFile The destination file.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 移动文件或目录
      */
     public static boolean moveFile(final File srcFile,
                                    final File destFile) {
@@ -410,12 +296,7 @@ public final class FileUtils {
     }
 
     /**
-     * Move the file.
-     *
-     * @param srcFile  The source file.
-     * @param destFile The destination file.
-     * @param listener The replace listener.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 移动文件或目录
      */
     public static boolean moveFile(final File srcFile,
                                    final File destFile,
@@ -506,20 +387,14 @@ public final class FileUtils {
     }
 
     /**
-     * Delete the directory.
-     *
-     * @param dirPath The path of directory.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 删除目录
      */
     public static boolean deleteDir(final String dirPath) {
         return deleteDir(getFileByPath(dirPath));
     }
 
     /**
-     * Delete the directory.
-     *
-     * @param dir The directory.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 删除目录
      */
     public static boolean deleteDir(final File dir) {
         if (dir == null) return false;
@@ -541,40 +416,28 @@ public final class FileUtils {
     }
 
     /**
-     * Delete the file.
-     *
-     * @param srcFilePath The path of source file.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 删除文件
      */
     public static boolean deleteFile(final String srcFilePath) {
         return deleteFile(getFileByPath(srcFilePath));
     }
 
     /**
-     * Delete the file.
-     *
-     * @param file The file.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 删除文件
      */
     public static boolean deleteFile(final File file) {
         return file != null && (!file.exists() || file.isFile() && file.delete());
     }
 
     /**
-     * Delete the all in directory.
-     *
-     * @param dirPath The path of directory.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 删除目录下所有内容
      */
     public static boolean deleteAllInDir(final String dirPath) {
         return deleteAllInDir(getFileByPath(dirPath));
     }
 
     /**
-     * Delete the all in directory.
-     *
-     * @param dir The directory.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 删除目录下所有内容
      */
     public static boolean deleteAllInDir(final File dir) {
         return deleteFilesInDirWithFilter(dir, new FileFilter() {
@@ -586,20 +449,14 @@ public final class FileUtils {
     }
 
     /**
-     * Delete all files in directory.
-     *
-     * @param dirPath The path of directory.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 删除目录下所有文件
      */
     public static boolean deleteFilesInDir(final String dirPath) {
         return deleteFilesInDir(getFileByPath(dirPath));
     }
 
     /**
-     * Delete all files in directory.
-     *
-     * @param dir The directory.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 删除目录下所有文件
      */
     public static boolean deleteFilesInDir(final File dir) {
         return deleteFilesInDirWithFilter(dir, new FileFilter() {
@@ -611,11 +468,7 @@ public final class FileUtils {
     }
 
     /**
-     * Delete all files that satisfy the filter in directory.
-     *
-     * @param dirPath The path of directory.
-     * @param filter  The filter.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 删除目录下所有过滤的文件
      */
     public static boolean deleteFilesInDirWithFilter(final String dirPath,
                                                      final FileFilter filter) {
@@ -623,11 +476,7 @@ public final class FileUtils {
     }
 
     /**
-     * Delete all files that satisfy the filter in directory.
-     *
-     * @param dir    The directory.
-     * @param filter The filter.
-     * @return {@code true}: success<br>{@code false}: fail
+     * 删除目录下所有过滤的文件
      */
     public static boolean deleteFilesInDirWithFilter(final File dir, final FileFilter filter) {
         if (dir == null) return false;
@@ -651,44 +500,28 @@ public final class FileUtils {
     }
 
     /**
-     * Return the files in directory.
-     * <p>Doesn't traverse subdirectories</p>
-     *
-     * @param dirPath The path of directory.
-     * @return the files in directory
+     * 获取目录下所有文件
      */
     public static List<File> listFilesInDir(final String dirPath) {
         return listFilesInDir(dirPath, false);
     }
 
     /**
-     * Return the files in directory.
-     * <p>Doesn't traverse subdirectories</p>
-     *
-     * @param dir The directory.
-     * @return the files in directory
+     * 获取目录下所有文件
      */
     public static List<File> listFilesInDir(final File dir) {
         return listFilesInDir(dir, false);
     }
 
     /**
-     * Return the files in directory.
-     *
-     * @param dirPath     The path of directory.
-     * @param isRecursive True to traverse subdirectories, false otherwise.
-     * @return the files in directory
+     * 获取目录下所有文件
      */
     public static List<File> listFilesInDir(final String dirPath, final boolean isRecursive) {
         return listFilesInDir(getFileByPath(dirPath), isRecursive);
     }
 
     /**
-     * Return the files in directory.
-     *
-     * @param dir         The directory.
-     * @param isRecursive True to traverse subdirectories, false otherwise.
-     * @return the files in directory
+     * 获取目录下所有文件
      */
     public static List<File> listFilesInDir(final File dir, final boolean isRecursive) {
         return listFilesInDirWithFilter(dir, new FileFilter() {
@@ -700,12 +533,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the files that satisfy the filter in directory.
-     * <p>Doesn't traverse subdirectories</p>
-     *
-     * @param dirPath The path of directory.
-     * @param filter  The filter.
-     * @return the files that satisfy the filter in directory
+     * 获取目录下所有过滤的文件
      */
     public static List<File> listFilesInDirWithFilter(final String dirPath,
                                                       final FileFilter filter) {
@@ -713,12 +541,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the files that satisfy the filter in directory.
-     * <p>Doesn't traverse subdirectories</p>
-     *
-     * @param dir    The directory.
-     * @param filter The filter.
-     * @return the files that satisfy the filter in directory
+     * 获取目录下所有过滤的文件
      */
     public static List<File> listFilesInDirWithFilter(final File dir,
                                                       final FileFilter filter) {
@@ -726,12 +549,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the files that satisfy the filter in directory.
-     *
-     * @param dirPath     The path of directory.
-     * @param filter      The filter.
-     * @param isRecursive True to traverse subdirectories, false otherwise.
-     * @return the files that satisfy the filter in directory
+     * 获取目录下所有过滤的文件
      */
     public static List<File> listFilesInDirWithFilter(final String dirPath,
                                                       final FileFilter filter,
@@ -740,12 +558,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the files that satisfy the filter in directory.
-     *
-     * @param dir         The directory.
-     * @param filter      The filter.
-     * @param isRecursive True to traverse subdirectories, false otherwise.
-     * @return the files that satisfy the filter in directory
+     * 获取目录下所有过滤的文件
      */
     public static List<File> listFilesInDirWithFilter(final File dir,
                                                       final FileFilter filter,
@@ -768,10 +581,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the time that the file was last modified.
-     *
-     * @param filePath The path of file.
-     * @return the time that the file was last modified
+     * 获取文件最后修改的毫秒时间戳
      */
 
     public static long getFileLastModified(final String filePath) {
@@ -779,10 +589,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the time that the file was last modified.
-     *
-     * @param file The file.
-     * @return the time that the file was last modified
+     * 获取文件最后修改的毫秒时间戳
      */
     public static long getFileLastModified(final File file) {
         if (file == null) return -1;
@@ -790,20 +597,14 @@ public final class FileUtils {
     }
 
     /**
-     * Return the charset of file simply.
-     *
-     * @param filePath The path of file.
-     * @return the charset of file simply
+     * 简单获取文件编码格式
      */
     public static String getFileCharsetSimple(final String filePath) {
         return getFileCharsetSimple(getFileByPath(filePath));
     }
 
     /**
-     * Return the charset of file simply.
-     *
-     * @param file The file.
-     * @return the charset of file simply
+     * 简单获取文件编码格式
      */
     public static String getFileCharsetSimple(final File file) {
         int p = 0;
@@ -835,20 +636,14 @@ public final class FileUtils {
     }
 
     /**
-     * Return the number of lines of file.
-     *
-     * @param filePath The path of file.
-     * @return the number of lines of file
+     * 获取文件行数
      */
     public static int getFileLines(final String filePath) {
         return getFileLines(getFileByPath(filePath));
     }
 
     /**
-     * Return the number of lines of file.
-     *
-     * @param file The file.
-     * @return the number of lines of file
+     * 获取文件行数
      */
     public static int getFileLines(final File file) {
         int count = 1;
@@ -885,20 +680,14 @@ public final class FileUtils {
     }
 
     /**
-     * Return the size of directory.
-     *
-     * @param dirPath The path of directory.
-     * @return the size of directory
+     * 获取目录大小
      */
     public static String getDirSize(final String dirPath) {
         return getDirSize(getFileByPath(dirPath));
     }
 
     /**
-     * Return the size of directory.
-     *
-     * @param dir The directory.
-     * @return the size of directory
+     * 获取目录大小
      */
     public static String getDirSize(final File dir) {
         long len = getDirLength(dir);
@@ -906,10 +695,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the length of file.
-     *
-     * @param filePath The path of file.
-     * @return the length of file
+     * 获取文件大小
      */
     public static String getFileSize(final String filePath) {
         long len = getFileLength(filePath);
@@ -917,10 +703,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the length of file.
-     *
-     * @param file The file.
-     * @return the length of file
+     * 获取文件大小
      */
     public static String getFileSize(final File file) {
         long len = getFileLength(file);
@@ -928,20 +711,14 @@ public final class FileUtils {
     }
 
     /**
-     * Return the length of directory.
-     *
-     * @param dirPath The path of directory.
-     * @return the length of directory
+     * 获取目录长度
      */
     public static long getDirLength(final String dirPath) {
         return getDirLength(getFileByPath(dirPath));
     }
 
     /**
-     * Return the length of directory.
-     *
-     * @param dir The directory.
-     * @return the length of directory
+     * 获取目录长度
      */
     public static long getDirLength(final File dir) {
         if (!isDir(dir)) return -1;
@@ -960,10 +737,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the length of file.
-     *
-     * @param filePath The path of file.
-     * @return the length of file
+     * 获取文件长度
      */
     public static long getFileLength(final String filePath) {
         boolean isURL = filePath.matches("[a-zA-z]+://[^\\s]*");
@@ -984,10 +758,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the length of file.
-     *
-     * @param file The file.
-     * @return the length of file
+     * 获取文件长度
      */
     public static long getFileLength(final File file) {
         if (!isFile(file)) return -1;
@@ -995,10 +766,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the MD5 of file.
-     *
-     * @param filePath The path of file.
-     * @return the md5 of file
+     * 获取文件的 MD5 校验码
      */
     public static String getFileMD5ToString(final String filePath) {
         File file = isSpace(filePath) ? null : new File(filePath);
@@ -1006,30 +774,21 @@ public final class FileUtils {
     }
 
     /**
-     * Return the MD5 of file.
-     *
-     * @param file The file.
-     * @return the md5 of file
+     * 获取文件的 MD5 校验码
      */
     public static String getFileMD5ToString(final File file) {
         return bytes2HexString(getFileMD5(file));
     }
 
     /**
-     * Return the MD5 of file.
-     *
-     * @param filePath The path of file.
-     * @return the md5 of file
+     * 获取文件的 MD5 校验码
      */
     public static byte[] getFileMD5(final String filePath) {
         return getFileMD5(getFileByPath(filePath));
     }
 
     /**
-     * Return the MD5 of file.
-     *
-     * @param file The file.
-     * @return the md5 of file
+     * 获取文件的 MD5 校验码
      */
     public static byte[] getFileMD5(final File file) {
         if (file == null) return null;
@@ -1059,10 +818,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the file's path of directory.
-     *
-     * @param file The file.
-     * @return the file's path of directory
+     * 根据全路径获取最长目录
      */
     public static String getDirName(final File file) {
         if (file == null) return "";
@@ -1070,10 +826,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the file's path of directory.
-     *
-     * @param filePath The path of file.
-     * @return the file's path of directory
+     * 根据全路径获取最长目录
      */
     public static String getDirName(final String filePath) {
         if (isSpace(filePath)) return "";
@@ -1082,10 +835,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the name of file.
-     *
-     * @param file The file.
-     * @return the name of file
+     * 根据全路径获取文件名
      */
     public static String getFileName(final File file) {
         if (file == null) return "";
@@ -1093,10 +843,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the name of file.
-     *
-     * @param filePath The path of file.
-     * @return the name of file
+     * 根据全路径获取文件名
      */
     public static String getFileName(final String filePath) {
         if (isSpace(filePath)) return "";
@@ -1105,10 +852,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the name of file without extension.
-     *
-     * @param file The file.
-     * @return the name of file without extension
+     * 根据全路径获取文件名不带拓展名
      */
     public static String getFileNameNoExtension(final File file) {
         if (file == null) return "";
@@ -1116,10 +860,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the name of file without extension.
-     *
-     * @param filePath The path of file.
-     * @return the name of file without extension
+     * 根据全路径获取文件名不带拓展名
      */
     public static String getFileNameNoExtension(final String filePath) {
         if (isSpace(filePath)) return "";
@@ -1135,10 +876,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the extension of file.
-     *
-     * @param file The file.
-     * @return the extension of file
+     * 根据全路径获取文件拓展名
      */
     public static String getFileExtension(final File file) {
         if (file == null) return "";
@@ -1146,10 +884,7 @@ public final class FileUtils {
     }
 
     /**
-     * Return the extension of file.
-     *
-     * @param filePath The path of file.
-     * @return the extension of file
+     * 根据全路径获取文件拓展名
      */
     public static String getFileExtension(final String filePath) {
         if (isSpace(filePath)) return "";
@@ -1239,4 +974,5 @@ public final class FileUtils {
             }
         }
     }
+
 }

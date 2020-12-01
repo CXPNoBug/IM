@@ -1,6 +1,7 @@
 package com.cxp.im.adapter;
 
 import android.text.TextUtils;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -117,6 +118,11 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<Message, BaseViewHold
                 //语音消息
                 AudioMsgBody audioMsgBody = (AudioMsgBody) item.getBody();
                 helper.setText(R.id.tvDuration, audioMsgBody.getDuration() + "\"");
+
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) helper.getView(R.id.rlAudio).getLayoutParams();
+                int width = (int) (65+audioMsgBody.getDuration()*2);
+                lp.width = AppUtils.dp2px(getContext(), width > 150 ? 150 : width);
+                helper.getView(R.id.rlAudio).setLayoutParams(lp);
                 break;
 
         }

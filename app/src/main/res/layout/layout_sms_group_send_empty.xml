@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sms_group_send_empty_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/new_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp100"
+        android:src="@mipmap/ic_sms_goup_send_empty" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp22"
+        android:text="暂无发送记录"
+        android:textColor="@color/new_color_666666"
+        android:textSize="@dimen/sp16" />
+
+</LinearLayout>

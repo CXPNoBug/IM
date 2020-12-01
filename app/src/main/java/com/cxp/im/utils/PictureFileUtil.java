@@ -83,7 +83,7 @@ public class PictureFileUtil {
                 .minSelectNum(1)// 最小选择数量
                 .imageSpanCount(3)// 每行显示个数
                 ///  .selectionMode(1 > 1 ?
-                //         PictureConfig.MULTIPLE : PictureConfig.SINGLE)// 多选 or 单选
+                //         RecordPictureConfig.MULTIPLE : RecordPictureConfig.SINGLE)// 多选 or 单选
                 .previewImage(true)// 是否可预览图片
                 .previewVideo(true)// 是否可预览视频
                 .enablePreviewAudio(true) // 是否可播放音频

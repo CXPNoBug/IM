@@ -7,14 +7,53 @@
     tools:context=".activity.MainActivity">
 
     <Button
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="clickLis"
-        android:text="会话页面"
         android:id="@+id/main_bt1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:onClick="clickLis"
+        android:text="会话页面"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/main_bt2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clickLis"
+        android:text="视频播放"
+        app:layout_constraintTop_toBottomOf="@+id/main_bt1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/main_bt3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clickLis"
+        android:text="视频录制"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_bt2"/>
+
+    <Button
+        android:id="@+id/main_bt4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clickLis"
+        android:text="短信群发"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_bt3"/>
+
+    <Button
+        android:id="@+id/main_bt5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clickLis"
+        android:text="指纹解锁"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_bt4"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

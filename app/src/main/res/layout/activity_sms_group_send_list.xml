@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/new_divide_f5f5f5"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_new_head" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sms_group_send_list_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp10"
+        android:overScrollMode="never" />
+
+    <include layout="@layout/layout_sms_group_send_empty"/>
+
+</LinearLayout>

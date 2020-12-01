@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <VideoView
+        android:id="@+id/record_video_videoview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.cxp.im.record.CustomVideoView
+        android:id="@+id/record_video_videoview_play"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:id="@+id/record_video_video_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/record_video_time_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/record_video_red"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:src="@mipmap/ic_record_video_red" />
+
+            <Chronometer
+                android:id="@+id/record_video_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:format="00:00"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 重拍 -->
+            <ImageView
+                android:id="@+id/record_video_again"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="left|center"
+                android:layout_marginLeft="35dp"
+                android:src="@mipmap/ic_record_video_again" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!-- 录像拍照 -->
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/ic_record_video_btn" />
+
+                    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                        android:id="@+id/record_video_progreebar"
+                        style="@style/Widget.MaterialProgressBar.ProgressBar.Small.NoPadding"
+                        android:layout_width="86dp"
+                        android:layout_height="86dp"
+                        android:indeterminate="false" />
+                </FrameLayout>
+
+
+                <TextView
+                    android:id="@+id/record_video_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="轻触拍摄 按住摄像"
+                    android:textColor="@color/fingerprint_color_ffffff"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- 切换摄像头 -->
+            <ImageView
+                android:id="@+id/record_video_switch_camera"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="35dp"
+                android:src="@mipmap/ic_record_video_reverse" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/record_video_success_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/record_video_success_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:src="@mipmap/ic_record_video_back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="80dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/record_video_success_time_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="27dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:src="@mipmap/ic_record_video_red" />
+
+                <Chronometer
+                    android:id="@+id/record_video_success_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:format="00:00"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!-- 重拍 -->
+                <ImageView
+                    android:id="@+id/record_video_success_again"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@mipmap/ic_record_video_again" />
+
+                <!-- 确认 -->
+                <ImageView
+                    android:id="@+id/record_video_success_ok"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="70dp"
+                    android:src="@mipmap/ic_record_video_ok" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

@@ -71,7 +71,6 @@ public class MediaManager {
     public static void reset() {
         if (mPlayer != null && mPlayer.isPlaying()) {
             mPlayer.reset();
-
         }
     }
 
@@ -79,6 +78,14 @@ public class MediaManager {
     public static boolean isStart() {
         if (mPlayer != null && mPlayer.isPlaying()) {
             return true;
+        }
+        return false;
+    }
+
+    //正在播放
+    public static boolean isPlaying() {
+        if (mPlayer!=null) {
+            return mPlayer.isPlaying();
         }
         return false;
     }

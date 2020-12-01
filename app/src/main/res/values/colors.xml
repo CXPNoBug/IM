@@ -13,7 +13,7 @@
     <color name="new_color_CCCCCC">#CCCCCC</color>
     <color name="new_color_fff3f3f3">#fff3f3f3</color>
     <color name="new_color_f3f3f3">#f3f3f3</color>
-    <color name="new_divide_fff5f5f5">#fff5f5f5</color>
+    <color name="new_divide_f5f5f5">#f5f5f5</color>
     <color name="new_divide_e5e5e5">#E5E5E5</color>
     <color name="new_divide_efefef">#EFEFEF</color>
     <color name="new_color_F25643">#F25643</color>
@@ -29,4 +29,10 @@
     <color name="new_color_BDBDBD">#FFBDBDBD</color>
     <color name="un_disturb_point">#FFEE1B25</color>
 
+
+    <color name="fingerprint_color_primary">#415FFF</color>
+    <color name="fingerprint_color_ffffff">#ffffff</color>
+    <color name="fingerprint_color_333333">#333333</color>
+    <color name="fingerprint_color_82C785">#82C785</color>
+    <color name="fingerprint_color_FF5555">#FF5555</color>
 </resources>

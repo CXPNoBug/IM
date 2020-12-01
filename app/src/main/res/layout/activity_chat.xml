@@ -75,7 +75,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/shape_session_btn_voice"
                     android:text="按住说话"
-                    android:textSize="13dp"
+                    android:textSize="13sp"
                     android:visibility="gone" />
 
             </RelativeLayout>

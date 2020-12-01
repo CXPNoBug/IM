@@ -7,9 +7,11 @@ import android.content.DialogInterface;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +27,12 @@ import com.cxp.im.R;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
+import cafe.adriel.androidaudioconverter.callback.IConvertCallback;
+import cafe.adriel.androidaudioconverter.model.AudioFormat;
 
 public class RecordButton extends AppCompatButton {
 
@@ -44,7 +52,7 @@ public class RecordButton extends AppCompatButton {
         init();
     }
 
-    private String mFile = getContext().getFilesDir() + "/" + "voice_" + System.currentTimeMillis() + ".mp3";
+    private String mFile = "";
 
 
     private OnFinishedRecordListener finishedListener;
@@ -55,21 +63,38 @@ public class RecordButton extends AppCompatButton {
     /**
      * 最长录音时间
      **/
-    private int MAX_INTERVAL_TIME = 1000 * 60;
+    private int MAX_INTERVAL_TIME = 1000 * 15;
 
+    /**
+     * 倒计时
+     */
+    private int COUNT_DOWN = 1000 * 10;
 
     private static View view;
 
+    private LinearLayout mRootLl;
+    private TextView mStateDate;
     private TextView mStateTV;
-
+    private TextView mStateTime;
     private ImageView mStateIV;
 
     private MediaRecorder mRecorder;
     private ObtainDecibelThread mThread;
     private Handler volumeHandler;
 
+    private boolean isSend;
+
+    private long startCountTime;//实时刷新的时间
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+
+    private Handler mHandler = new Handler();
+
+    private CountDownTimer mCountDownTimer;
 
     private float y;
+
+    private boolean isCancel;
 
 
     public void setOnFinishedRecordListener(OnFinishedRecordListener listener) {
@@ -107,13 +132,28 @@ public class RecordButton extends AppCompatButton {
         int action = event.getAction();
         y = event.getY();
         if (mStateTV != null && mStateIV != null && y < 0) {
+            isCancel=true;
+            mStateIV.setVisibility(VISIBLE);
+            mStateDate.setVisibility(INVISIBLE);
+            mStateTime.setVisibility(GONE);
             mStateTV.setText("松开手指,取消发送");
             mStateIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_volume_cancel));
         } else if (mStateTV != null) {
+//            if (System.currentTimeMillis() - startTime-1000 > MAX_INTERVAL_TIME - COUNT_DOWN) {
+//                mStateIV.setVisibility(GONE);
+//                mStateDate.setVisibility(INVISIBLE);
+//                mStateTime.setVisibility(VISIBLE);
+//            } else {
+//                mStateTime.setVisibility(GONE);
+//                mStateDate.setVisibility(VISIBLE);
+//            }
             mStateTV.setText("手指上滑,取消发送");
         }
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                isSend = false;
+                mFile = getContext().getFilesDir() + "/" + "voice_" + System.currentTimeMillis() + ".mp3";
+
                 setText("松开发送");
                 initDialogAndStartRecord();
                 break;
@@ -122,10 +162,14 @@ public class RecordButton extends AppCompatButton {
                 this.setText("按住录音");
                 if (y >= 0 && (System.currentTimeMillis() - startTime <= MAX_INTERVAL_TIME)) {
                     Logger.d("结束录音:");
-                    finishRecord();
+                    if (!isSend) {
+                        finishRecord();
+                    }
 
                 } else if (y < 0) {  //当手指向上滑，会cancel
-                    cancelRecord();
+                    if (!isSend) {
+                        cancelRecord();
+                    }
                 }
                 break;
         }
@@ -141,9 +185,14 @@ public class RecordButton extends AppCompatButton {
         recordDialog = new Dialog(getContext(), R.style.like_toast_dialog_style);
         // view = new ImageView(getContext());
         view = View.inflate(getContext(), R.layout.dialog_record, null);
-        mStateIV = (ImageView) view.findViewById(R.id.rc_audio_state_image);
-        mStateTV = (TextView) view.findViewById(R.id.rc_audio_state_text);
+        mRootLl = view.findViewById(R.id.rc_audio_ll);
+        mStateDate = view.findViewById(R.id.rc_audio_state_date);
+        mStateIV = view.findViewById(R.id.rc_audio_state_image);
+        mStateTime = view.findViewById(R.id.rc_audio_state_time);
+        mStateTV = view.findViewById(R.id.rc_audio_state_text);
         mStateIV.setImageDrawable(getResources().getDrawable(R.drawable.anim_mic));
+
+
         anim = (AnimationDrawable) mStateIV.getDrawable();
         anim.start();
         mStateIV.setVisibility(View.VISIBLE);
@@ -158,15 +207,32 @@ public class RecordButton extends AppCompatButton {
         lp.gravity = Gravity.CENTER;
         startRecording();
         recordDialog.show();
+
     }
 
     /**
      * 放开手指，结束录音处理
      */
     private void finishRecord() {
+
+        isSend = true;
+
+        controllDateOpen(false);
+
+        isCancel=false;
+
+
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+            mCountDownTimer = null;
+        }
+
         long intervalTime = System.currentTimeMillis() - startTime;
         if (intervalTime < MIN_INTERVAL_TIME) {
             Logger.d("录音时间太短");
+            mStateIV.setVisibility(VISIBLE);
+            mStateDate.setVisibility(INVISIBLE);
+            mStateTime.setVisibility(GONE);
             volumeHandler.sendEmptyMessageDelayed(-100, 500);
             //view.setBackgroundResource(R.drawable.ic_voice_cancel);
             mStateIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_volume_wraning));
@@ -192,8 +258,31 @@ public class RecordButton extends AppCompatButton {
 
         }
 
-        if (finishedListener != null)
-            finishedListener.onFinishedRecord(mFile, mediaPlayer.getDuration() / 1000);
+        File amrFile = new File(mFile);
+        IConvertCallback callback = new IConvertCallback() {
+            @Override
+            public void onSuccess(File convertedFile) {
+                // So fast? Love it!
+                if (finishedListener != null)
+                    finishedListener.onFinishedRecord(convertedFile.getPath(), mediaPlayer.getDuration() / 1000);
+            }
+            @Override
+            public void onFailure(Exception error) {
+                // Oops! Something went wrong
+            }
+        };
+        AndroidAudioConverter.with(getContext())
+                // Your current audio file
+                .setFile(amrFile)
+
+                // Your desired audio format
+                .setFormat(AudioFormat.MP3)
+
+                // An callback to know when conversion is finished
+                .setCallback(callback)
+
+                // Start conversion
+                .convert();
 
     }
 
@@ -201,6 +290,18 @@ public class RecordButton extends AppCompatButton {
      * 取消录音对话框和停止录音
      */
     public void cancelRecord() {
+
+        isSend = true;
+
+        controllDateOpen(false);
+
+        isCancel=false;
+
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+            mCountDownTimer = null;
+        }
+
         stopRecording();
         recordDialog.dismiss();
         File file = new File(mFile);
@@ -215,6 +316,14 @@ public class RecordButton extends AppCompatButton {
      */
     //int num = 0 ;
     private void startRecording() {
+
+
+        if (mHandler != null) {
+            mHandler.postDelayed(runnable, 1000);
+        }
+
+        controllDateOpen(true);
+
         if (mRecorder != null) {
             mRecorder.reset();
         } else {
@@ -331,5 +440,83 @@ public class RecordButton extends AppCompatButton {
         public void onFinishedRecord(String audioPath, int time);
     }
 
+
+    /**
+     * 倒计时显示
+     */
+    private void countDown() {
+
+        //COUNT_DOWN+50 +50预防误差
+        mCountDownTimer = new CountDownTimer(COUNT_DOWN+50, 1000) {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //计时
+                long count = millisUntilFinished / 1000;
+                Log.d("CXP_LOG",""+millisUntilFinished);
+                mStateTime.setText("" + count);
+            }
+
+            @Override
+            public void onFinish() {
+                //完成
+                if (!isSend) {
+                    finishRecord();
+                }
+            }
+        };
+        mCountDownTimer.start();
+    }
+
+    /**
+     * 计时器
+     */
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            startCountTime += 1000;
+
+            if (startCountTime <= (MAX_INTERVAL_TIME - COUNT_DOWN)) {
+                if (mStateDate != null) {
+                    mStateDate.setText(sdf.format(new Date(startCountTime)));
+                }
+                mHandler.postDelayed(runnable, 1000);
+            } else {
+                controllDateOpen(false);
+                //倒计时
+                countDown();
+            }
+        }
+    };
+
+
+    /**
+     * 控制时间开关
+     */
+    private void controllDateOpen(boolean open) {
+        if (open) {
+            mStateDate.setText("00:00");
+            mStateDate.setVisibility(VISIBLE);
+            mStateIV.setVisibility(VISIBLE);
+            mStateTime.setVisibility(GONE);
+            mStateTV.setVisibility(VISIBLE);
+        } else {
+
+            if (mHandler != null) {
+                mHandler.removeCallbacks(runnable);
+            }
+
+            startCountTime = 0;
+            mStateDate.setVisibility(INVISIBLE);
+            if (!isCancel ) {
+                mStateIV.setVisibility(GONE);
+                mStateTime.setVisibility(VISIBLE);
+            } else {
+                mStateIV.setVisibility(VISIBLE);
+                mStateTime.setVisibility(GONE);
+            }
+            mStateTV.setVisibility(VISIBLE);
+        }
+    }
 
 }

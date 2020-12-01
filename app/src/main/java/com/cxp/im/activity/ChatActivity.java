@@ -98,6 +98,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private ImageView ivAudio;
 
+    private int mCurrentPosition = -1;
+
     private Context mContext;
 
     @Override
@@ -171,41 +173,72 @@ public class ChatActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-
                 final boolean isSend = mAdapter.getItem(position).getSenderId().equals(AppUtils.mSenderId);
-                if (ivAudio != null) {
-                    if (isSend) {
-                        ivAudio.setBackgroundResource(R.mipmap.audio_animation_list_right_3);
+                if (mCurrentPosition == position) {
+
+                    if (MediaManager.isPlaying()) {
+                        //释放语音
+                        releaseSound(isSend);
                     } else {
-                        ivAudio.setBackgroundResource(R.mipmap.audio_animation_list_left_3);
+                        //播放语音
+                        playSound(isSend, view, position);
                     }
-                    ivAudio = null;
-                    MediaManager.reset();
                 } else {
-                    ivAudio = view.findViewById(R.id.ivAudio);
-                    MediaManager.reset();
-                    if (isSend) {
-                        ivAudio.setBackgroundResource(R.drawable.audio_animation_right_list);
-                    } else {
-                        ivAudio.setBackgroundResource(R.drawable.audio_animation_left_list);
+                    if (mCurrentPosition != -1) {
+                        //释放语音
+                        releaseSound(isSend);
                     }
-                    AnimationDrawable drawable = (AnimationDrawable) ivAudio.getBackground();
-                    drawable.start();
-                    MediaManager.playSound(mContext, ((AudioMsgBody) mAdapter.getData().get(position).getBody()).getLocalPath(), new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-                            if (isSend) {
-                                ivAudio.setBackgroundResource(R.mipmap.audio_animation_list_right_3);
-                            } else {
-                                ivAudio.setBackgroundResource(R.mipmap.audio_animation_list_left_3);
-                            }
-                            MediaManager.release();
-                        }
-                    });
+                    //播放语音
+                    playSound(isSend, view, position);
                 }
+                mCurrentPosition = position;
+
             }
         });
 
+    }
+
+    /**
+     * 播放语音
+     */
+    private void playSound(boolean isSend, View view, int position) {
+        ivAudio = view.findViewById(R.id.ivAudio);
+        MediaManager.reset();
+        if (isSend) {
+            ivAudio.setBackgroundResource(R.drawable.audio_animation_right_list);
+        } else {
+            ivAudio.setBackgroundResource(R.drawable.audio_animation_left_list);
+        }
+        AnimationDrawable drawable = (AnimationDrawable) ivAudio.getBackground();
+        drawable.start();
+        MediaManager.playSound(mContext, ((AudioMsgBody) mAdapter.getData().get(position).getBody()).getLocalPath(), new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                if (isSend) {
+                    ivAudio.setBackgroundResource(R.mipmap.audio_animation_list_right_3);
+                } else {
+                    ivAudio.setBackgroundResource(R.mipmap.audio_animation_list_left_3);
+                }
+                MediaManager.release();
+            }
+        });
+    }
+
+    /**
+     * 释放语音
+     */
+    private void releaseSound(boolean isSend) {
+        if (isSend) {
+            if (ivAudio != null) {
+                ivAudio.setBackgroundResource(R.mipmap.audio_animation_list_right_3);
+            }
+        } else {
+            if (ivAudio != null) {
+                ivAudio.setBackgroundResource(R.mipmap.audio_animation_list_left_3);
+            }
+        }
+        ivAudio = null;
+        MediaManager.reset();
     }
 
     /**
@@ -453,5 +486,11 @@ public class ChatActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MediaManager.reset();
     }
 }

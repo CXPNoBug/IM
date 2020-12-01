@@ -6,6 +6,10 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cxp.im.other.SerializableMap;
+
+import java.util.Map;
+
 /**
  * 文 件 名: BaseActivity
  * 创 建 人: CXP
@@ -33,6 +37,17 @@ public class BaseActivity extends AppCompatActivity {
      */
     public void startActivity(Class cls) {
         Intent intent = new Intent(this, cls);
+        startActivity(intent);
+    }
+
+    //页面跳转
+    public void startActivity(Class cls, Map<String, Object> map) {
+        Intent intent = new Intent(this, cls);
+        SerializableMap myMap = new SerializableMap();
+        myMap.setMap(map);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("map", myMap);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

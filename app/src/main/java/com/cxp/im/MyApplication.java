@@ -17,6 +17,10 @@ import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
+import com.tencent.mmkv.MMKV;
+
+import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
+import cafe.adriel.androidaudioconverter.callback.ILoadCallback;
 
 /**
  * 文 件 名: MyApplication
@@ -66,6 +70,20 @@ public class MyApplication extends Application {
             @Override
             public boolean isLoggable(int priority, @Nullable String tag) {
                 return BuildConfig.DEBUG;
+            }
+        });
+
+        //初始化MMKV
+        MMKV.initialize(this);
+
+        AndroidAudioConverter.load(this, new ILoadCallback() {
+            @Override
+            public void onSuccess() {
+                // Great!
+            }
+            @Override
+            public void onFailure(Exception error) {
+                // FFmpeg is not supported by device
             }
         });
     }

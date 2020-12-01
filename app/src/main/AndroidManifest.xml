@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cxp.im">
 
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -11,6 +16,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:name=".MyApplication"
@@ -23,18 +30,18 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <!--全面屏-->
-<!--        <meta-data-->
-<!--            android:name="android.max_aspect"-->
-<!--            android:value="2.4" />-->
+        <!--        <meta-data-->
+        <!--            android:name="android.max_aspect"-->
+        <!--            android:value="2.4" />-->
 
         <!--适配华为（huawei）刘海屏-->
-<!--        <meta-data-->
-<!--            android:name="android.notch_support"-->
-<!--            android:value="true"/>-->
+        <!--        <meta-data-->
+        <!--            android:name="android.notch_support"-->
+        <!--            android:value="true"/>-->
         <!--适配小米（xiaomi）刘海屏-->
-<!--        <meta-data-->
-<!--            android:name="notch.config"-->
-<!--            android:value="portrait|landscape" />-->
+        <!--        <meta-data-->
+        <!--            android:name="notch.config"-->
+        <!--            android:value="portrait|landscape" />-->
 
         <activity
             android:name=".activity.ChatActivity"
@@ -43,6 +50,20 @@
             android:theme="@style/ChatTheme"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity
+            android:name=".activity.VideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/ChatTheme"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity android:name=".activity.SmsGroupSendListActivity" />
+        <activity android:name=".activity.SmsDetailActivity" />
+        <activity android:name=".activity.SmsGroupSendActivity" />
+        <activity
+            android:theme="@style/RecordTheme"
+            android:name=".activity.RecordVideoActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

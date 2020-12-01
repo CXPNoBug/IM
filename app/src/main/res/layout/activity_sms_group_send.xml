@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/new_divide_f5f5f5"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_new_head" />
+
+    <View style="@style/Common_Divide_Line_Style" />
+
+    <LinearLayout
+        android:paddingTop="@dimen/dp5"
+        android:paddingBottom="@dimen/dp8"
+        android:paddingEnd="@dimen/dp20"
+        android:paddingStart="@dimen/dp20"
+        android:background="@color/new_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收件人："
+            android:textColor="@color/new_black"
+            android:textSize="@dimen/sp16" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sms_group_send_recyclerview"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never" />
+
+        <ImageView
+            android:layout_width="@dimen/dp42"
+            android:layout_height="@dimen/dp42"
+            android:src="@mipmap/ic_group_plus" />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/new_color_ffefefef"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingTop="@dimen/dp8"
+            android:paddingBottom="@dimen/dp8">
+
+            <EditText
+                android:id="@+id/message_chat_content_et"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_chat_et"
+                android:gravity="center_vertical"
+                android:imeOptions="actionSend"
+                android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
+                android:maxLines="5"
+                android:minHeight="@dimen/dp42"
+                android:paddingLeft="@dimen/dp10"
+                android:singleLine="false"
+                android:textColor="@color/new_black"
+                android:textSize="@dimen/sp14" />
+
+            <TextView
+                android:id="@+id/message_chat_send_btn"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp32"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_marginBottom="@dimen/dp2"
+                android:background="@drawable/selector_new_btn"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="发送"
+                android:textColor="@color/new_white"
+                android:textSize="@dimen/sp14" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>
